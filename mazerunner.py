@@ -315,14 +315,14 @@ def connection(host, port):
     yield send
 
 parser = ArgumentParser()
-parser.add_argument('--standalone', action='store_true', default=False)
-parser.add_argument('--errors', action='store_true', default=False)
-parser.add_argument('--host', type=str, default='127.0.0.1')
-parser.add_argument('--port', type=int, default=8855)
-parser.add_argument('--maze', required=True, type=Path)
-parser.add_argument('--seed', type=int, default=0)
-parser.add_argument('--tick', type=float, default=1)
-parser.add_argument('-v', '--verbose', action='count', default=0)
+parser.add_argument('--standalone', action='store_true', default=False, help='run the maze runner robot in standalone mode')
+parser.add_argument('--errors', action='store_true', default=False, help='simulate error conditions for the robot')
+parser.add_argument('--host', type=str, default='127.0.0.1', help='the host where the simulated robot operates')
+parser.add_argument('--port', type=int, default=8855, help='the port where the simulated robot operates')
+parser.add_argument('--maze', required=True, type=Path, help='the maze we are trying to solve')
+parser.add_argument('--seed', type=int, default=0, help='our random seed (to deterministically reproduce outputs)')
+parser.add_argument('--tick', type=float, default=1, help='our tick speed (to run the simulation faster/slower)')
+parser.add_argument('-v', '--verbose', action='count', default=0, help='increase logging (e.g., see debug messages)')
 
 args = parser.parse_args()
 basicConfig(level={0: INFO, 1: DEBUG}.get(args.verbose, INFO))
