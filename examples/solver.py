@@ -1,8 +1,6 @@
-from sys import path
-path.append('.')
-from mazerunner import *
+from mazerunner import Request, Response, connection
 from time import sleep
-from random import choice
+from random import Random
 
 def move_one():
     return
@@ -12,8 +10,9 @@ def turn_one():
     return
     yield
 
-def turn_until_free(tick):
-    yield choice([Request.TurnLeft, Request.TurnRight])()
+def turn_until_free(tick, *, random_state=None):
+    rnd = random_state if random_state is not None else Random()
+    yield rnd.choice([Request.TurnLeft, Request.TurnRight])()
     while not isinstance(resp := (yield Request.FrontSensor()), Response.NoWall):
         sleep(tick)
     yield Request.StopTurn()
@@ -24,7 +23,8 @@ def turn_until_free(tick):
 #         sleep(tick)
 #     yield Request.StopMove()
 
-def move_until_stopped(tick):
+def move_until_stopped(tick, *, random_state=None):
+    rnd = random_state if random_state is not None else Random()
     yield Request.Move()
     while True:
         if isinstance(resp := (yield Request.FrontSensor()), Response.Wall):
@@ -34,7 +34,8 @@ def move_until_stopped(tick):
         sleep(tick)
     yield Request.StopMove()
 
-def simplesolver(tick):
+def simplesolver(tick, *, random_state=None):
+    rnd = random_state if random_state is not None else Random()
     while not isinstance(resp := (yield Request.ExitSensor()), Response.Exit):
         yield from turn_until_free(tick=tick)
         yield from move_until_stopped(tick=tick)
@@ -44,7 +45,7 @@ with connection(host=args.host, port=args.port) as send:
     resp = send(req := Request.Test())
     logger.info('Request → Response: %16r → %r', req, resp)
 
-    ci = simplesolver(tick=1)
+    ci = simplesolver(tick=1, random_state=Random(0))
 
     resp = None
     while True:
