@@ -3,6 +3,10 @@
 Maze Runner is a research output for some code for directing robots to solve
 simple mazes.
 
+Maze Runner is an example of how do design a planification (i.e., plan-building)
+for fields such as x-ray physics and in areas such as experimental design
+for x-ray beamlines.
+
 This code uses generator coroutines, a very sophisticated approach in Python.
 You will notice that maze solvers involve the use of [PEP-380 Delegation to a
 Subgenerator](https://peps.python.org/pep380) (also known as `yield from`.)
