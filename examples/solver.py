@@ -2,26 +2,12 @@ from mazerunner import Request, Response, connection
 from time import sleep
 from random import Random
 
-def move_one():
-    return
-    yield
-
-def turn_one():
-    return
-    yield
-
 def turn_until_free(tick, *, random_state=None):
     rnd = random_state if random_state is not None else Random()
     yield rnd.choice([Request.TurnLeft, Request.TurnRight])()
     while not isinstance(resp := (yield Request.FrontSensor()), Response.NoWall):
         sleep(tick)
     yield Request.StopTurn()
-
-# def move_until_exit(tick):
-#     yield Request.Move()
-#     while not isinstance(resp := (yield Request.ExitSensor()), Response.Exit):
-#         sleep(tick)
-#     yield Request.StopMove()
 
 def move_until_stopped(tick, *, random_state=None):
     rnd = random_state if random_state is not None else Random()
