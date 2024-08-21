@@ -324,14 +324,8 @@ parser.add_argument('--seed', type=int, default=0, help='our random seed (to det
 parser.add_argument('--tick', type=float, default=1, help='our tick speed (to run the simulation faster/slower)')
 parser.add_argument('-v', '--verbose', action='count', default=0, help='increase logging (e.g., see debug messages)')
 
-args = parser.parse_args()
-basicConfig(level={0: INFO, 1: DEBUG}.get(args.verbose, INFO))
-
-agent_kwargs= {'host': args.host, 'port': args.port, 'maze': args.maze, 'seed': args.seed, 'errors': args.errors, 'tick': args.tick}
-if args.standalone:
-    exit(agent_process(**agent_kwargs))
-else:
-    (proc := Process(target=agent_process, kwargs=agent_kwargs)).start()
+def run_agent(**kwargs):
+    (proc := Process(target=agent_process, kwargs=kwargs)).start()
 
     @atexit_register
     def kill_agent_target(proc=proc):
@@ -340,7 +334,7 @@ else:
         proc.join()
     sleep(.1)
 
-if False:
+if __name__ == '__main__':
     with connection(host=args.host, port=args.port) as send:
         resp = send(req := Request.Test())
         logger.info('Request → Response: %16r → %r', req, resp)
