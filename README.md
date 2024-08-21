@@ -15,3 +15,9 @@ This code simulates a robot that operates like an X-Ray beamline instrument:
 - the robot receives messages
 - the robot replies with information about it state
 - you design a plan for the robot to solve the maze by passing messages back and forth
+
+## Example for Use
+
+```bash
+PYTHONPATH=$PWD python examples/solver.py --maze mazes/linear0.mz
+```
