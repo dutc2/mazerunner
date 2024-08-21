@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Powell
+    given-names: James
+    orcid: https://orcid.org/0009-0009-2258-6421
+title: "Mazerunner Project"
+version: 1.0.0
+identifiers:
+  - type: doi
+    value: XX.XXXX/zenodo.XXXX
+date-released: 2024-08-20
