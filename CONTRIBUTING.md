@@ -9,3 +9,6 @@ We will review issues as they posted.
 
 If you submit a pull request, please affirm that you are okay with the license
 requirements to contribute to this code.
+
+Please submit all work as a pull request. Even if you have write access to this
+repository, please do not push directly to the `main` branch.
